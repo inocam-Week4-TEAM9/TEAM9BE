@@ -24,17 +24,18 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-   @Column(nullable = false)
-   private  String nickname;
-    
+    @Column(nullable = false)
+    private  String nickname;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)    // Enum값 그대로 db에 저장
     private UserRoleEnum role;
 
     @Builder
-    private User(String email, String password, String nickname) {
+    private User(String email, String password, String nickname,UserRoleEnum role) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.role=role;
     }
 }
