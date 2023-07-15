@@ -22,6 +22,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+   @Column(nullable = false)
+   private  String nickname;
+    
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)    // Enum값 그대로 db에 저장
     private UserRoleEnum role;
