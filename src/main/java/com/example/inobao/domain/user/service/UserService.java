@@ -23,7 +23,7 @@ public class UserService {
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
     @Transactional
-    public UserResponseDto signup(UserRequestDto userRequestDto) {
+    public UserResponseDto signIn(UserRequestDto userRequestDto) {
         String email = userRequestDto.getEmail();
         String nickname=userRequestDto.getNickname();
         String password = passwordEncoder.encode(userRequestDto.getPassword());
@@ -48,11 +48,11 @@ public class UserService {
         return new UserResponseDto("가입 완료",HttpStatus.OK.value());
     }
 
-    public Boolean checkemail(String email) {
+    public Boolean checkEmail(String email) {
         return userRepository.existsByEmail(email);
     }
 
-    public Boolean checknickname(String nickname) {
+    public Boolean checkNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
     }
 }
