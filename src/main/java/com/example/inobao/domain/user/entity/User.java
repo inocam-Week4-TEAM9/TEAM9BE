@@ -1,6 +1,7 @@
 package com.example.inobao.domain.user.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +18,8 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    @Email
+    private String email;
 
     @Column(nullable = false)
     private String password;
@@ -30,9 +32,9 @@ public class User {
     private UserRoleEnum role;
 
     @Builder
-    private User(String username, String password, UserRoleEnum role) {
-        this.username = username;
+    private User(String email, String password, String nickname) {
+        this.email = email;
         this.password = password;
-        this.role = role;
+        this.nickname = nickname;
     }
 }
