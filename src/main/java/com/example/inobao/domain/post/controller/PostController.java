@@ -28,19 +28,19 @@ public class PostController {
 
     // 게시글 생성
     @PostMapping("/posts")
-    public PostResponseDto createPost(@Valid @RequestBody PostRequestDto postRequestDto, String email) {
-        return postService.createPost(postRequestDto, email);
+    public PostResponseDto createPost(@Valid @RequestBody PostRequestDto postRequestDto, String nickname) {
+        return postService.createPost(postRequestDto, nickname);
     }
 
     // 게시글 삭제
-    @DeleteMapping("/posts/{postid}")
-    public ResponseEntity<String> deletePost(@PathVariable Long postid, String email) {
-        return postService.deletePost(postid, email);
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable Long postId, String nickname) {
+        return postService.deletePost(postId, nickname);
     }
 
     // 게시글 수정
-    @PutMapping("/posts/{postid}")
-    public PostResponseDto modifyPost(@PathVariable Long postid, @RequestBody PostRequestDto postRequestDto, String email) {
-        return postService.modifyPost(postRequestDto, postid, email);
+    @PutMapping("/posts/{postId}")
+    public PostResponseDto modifyPost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto, String nickname) {
+        return postService.modifyPost(postRequestDto, postId, nickname);
     }
 }
