@@ -22,7 +22,7 @@ public class PostService {
 
     // 게시글 전체 조회
     public List<PostResponseDto> getPosts() {
-        return postRepository.findAllByOderByCreatedDateDesc()
+        return postRepository.findAllByOrderByCreatedDateDesc()
                 .stream().map(PostResponseDto::new).toList();
     }
 

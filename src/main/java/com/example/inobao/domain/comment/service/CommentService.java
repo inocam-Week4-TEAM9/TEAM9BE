@@ -38,7 +38,7 @@ public class CommentService {
 
     // 댓글 삭제
     public ResponseEntity<String> deleteComment(Long postId, Long id, String nickname) {
-        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedAtDesc(postId, id).orElseThrow(IllegalArgumentException::new);
+        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedDateDesc(postId, id).orElseThrow(IllegalArgumentException::new);
 
         User user = userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException());
 
@@ -57,7 +57,7 @@ public class CommentService {
 
     // 댓글 수정
     public CommentResponseDto modifyComment(Long postId, Long id, CommentRequestDto commentRequestDto, String nickname) {
-        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedAtDesc(postId, id).orElseThrow(IllegalArgumentException::new);
+        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedDateDesc(postId, id).orElseThrow(IllegalArgumentException::new);
 
         User user = userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException());
 

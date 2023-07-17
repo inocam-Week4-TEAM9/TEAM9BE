@@ -20,7 +20,7 @@ import java.util.List;
 
 @Getter
 @Entity
-@Table(name = "post")
+@Table(name = "posts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Post {
@@ -40,7 +40,7 @@ public class Post {
     @Column(updatable = false)
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
