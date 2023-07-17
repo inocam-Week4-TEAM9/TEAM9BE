@@ -8,6 +8,7 @@ import com.example.inobao.domain.post.entity.Post;
 import com.example.inobao.domain.post.repository.PostRepository;
 import com.example.inobao.domain.user.entity.User;
 import com.example.inobao.domain.user.entity.UserRoleEnum;
+import com.example.inobao.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,13 @@ import org.springframework.stereotype.Service;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     // 댓글 생성
-    public CommentResponseDto createComment(CommentRequestDto commentRequestDto, Long id, String email) {
+    public CommentResponseDto createComment(CommentRequestDto commentRequestDto, Long id, String nickname) {
         Post post = postRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException());
+        User user = userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException());
 
         Comment comment = Comment.builder()
                 .user(user)
@@ -35,10 +37,10 @@ public class CommentService {
     }
 
     // 댓글 삭제
-    public ResponseEntity<String> deleteComment(Long postid, Long id, String email) {
-        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedAtDesc(postid, id).orElseThrow(IllegalArgumentException::new);
+    public ResponseEntity<String> deleteComment(Long postId, Long id, String nickname) {
+        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedAtDesc(postId, id).orElseThrow(IllegalArgumentException::new);
 
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException());
+        User user = userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException());
 
         if (user.getRole().equals(UserRoleEnum.ADMIN)) {
             commentRepository.delete(comment);
@@ -54,10 +56,10 @@ public class CommentService {
     }
 
     // 댓글 수정
-    public CommentResponseDto modifyComment(Long postid, Long id, CommentRequestDto commentRequestDto, String email) {
-        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedAtDesc(postid, id).orElseThrow(IllegalArgumentException::new);
+    public CommentResponseDto modifyComment(Long postId, Long id, CommentRequestDto commentRequestDto, String nickname) {
+        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedAtDesc(postId, id).orElseThrow(IllegalArgumentException::new);
 
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException());
+        User user = userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException());
 
         if (user.getRole().equals(UserRoleEnum.ADMIN)) {
             comment.modifyComment(commentRequestDto.getContent());

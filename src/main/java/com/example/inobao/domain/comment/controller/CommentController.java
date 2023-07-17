@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/posts/{postid}/")
+@RequestMapping("/api/posts/{postId}/")
 public class CommentController {
     private final CommentService commentService;
 
     // 댓글 생성
     @PostMapping("/comments")
-    public CommentResponseDto createComment(@PathVariable Long postid, @RequestBody CommentRequestDto commentRequestDto, String email) {
-        return commentService.createComment(commentRequestDto, postid, email);
+    public CommentResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto, String nickname) {
+        return commentService.createComment(commentRequestDto, postId, nickname);
     }
 
     // 댓글 삭제
-    @DeleteMapping("/comments/{commentid}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long postid, @PathVariable Long commentid, String email) {
-        return commentService.deleteComment(postid, commentid, email);
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId, String nickname) {
+        return commentService.deleteComment(postId, commentId, nickname);
     }
 
     // 댓글 수정
-    @PutMapping("/comments/{commentid}")
-    public CommentResponseDto modifyComment(@PathVariable Long postid, @PathVariable Long commentid, @RequestBody CommentRequestDto commentRequestDto, String email) {
-        return commentService.modifyComment(postid, commentid, commentRequestDto, email);
+    @PutMapping("/comments/{commentId}")
+    public CommentResponseDto modifyComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto, String nickname) {
+        return commentService.modifyComment(postId, commentId, commentRequestDto, nickname);
     }
 }
