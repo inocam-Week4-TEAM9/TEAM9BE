@@ -27,14 +27,14 @@ public class Post {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @NotBlank(message = "게시글 공백 불가")
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @OneToMany(mappedBy = "post", fetch = LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 
     @Column(updatable = false)

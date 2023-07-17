@@ -2,11 +2,13 @@ package com.example.inobao.domain.comment.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CommentRequestDto {
     @NotBlank(message = "게시글 공백 불가")
-    private final String content;
+    private String content;
 
     public CommentRequestDto(String content) {
         this.content = content;

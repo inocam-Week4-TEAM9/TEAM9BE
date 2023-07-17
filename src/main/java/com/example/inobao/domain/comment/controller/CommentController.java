@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/posts/{postId}/")
 public class CommentController {
     private final CommentService commentService;
-
+    String nickname="zin";
     // 댓글 생성
     @PostMapping("/comments")
-    public CommentResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto, String nickname) {
+    public CommentResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto) {
         return commentService.createComment(commentRequestDto, postId, nickname);
     }
 
     // 댓글 삭제
     @DeleteMapping("/comments/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId, String nickname) {
+    public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
         return commentService.deleteComment(postId, commentId, nickname);
     }
 
     // 댓글 수정
     @PutMapping("/comments/{commentId}")
-    public CommentResponseDto modifyComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto, String nickname) {
+    public CommentResponseDto modifyComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto) {
         return commentService.modifyComment(postId, commentId, commentRequestDto, nickname);
     }
 }
