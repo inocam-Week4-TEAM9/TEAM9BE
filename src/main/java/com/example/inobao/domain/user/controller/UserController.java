@@ -15,17 +15,33 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
+    boolean check_Email=false;
+    boolean check_Nickname=false;
     @PostMapping("/auth/signin")
-    public UserResponseDto signup(@RequestBody UserRequestDto userRequestDto) {
-        return userService.signup(userRequestDto);
+    public UserResponseDto signIn(@RequestBody UserRequestDto userRequestDto) {
+        if (!check_Email)
+        {
+            if(!check_Nickname) {
+                return userService.signIn(userRequestDto);
+            }
+            else{
+                return new UserResponseDto("닉네임 중복확인하세요", HttpStatus.OK.value());
+            }
+        }
+        else
+        {
+            return new UserResponseDto("이메일 중복확인하세요", HttpStatus.OK.value());
+        }
     }
 
     @PostMapping("/auth/email")
-    public Boolean checkemail(@RequestParam String email){
-        return userService.checkemail(email);
+    public Boolean checkeMail(@RequestParam String email){
+        check_Email=userService.checkEmail(email);
+        return !userService.checkEmail(email);
     }
     @PostMapping("/auth/nickname")
-    public Boolean checknickname(@RequestParam String nickname){
-        return userService.checknickname(nickname);
+    public Boolean checkNickname(@RequestParam String nickname){
+        check_Nickname= userService.checkNickname(nickname);
+        return !userService.checkNickname(nickname);
     }
 }
