@@ -1,6 +1,7 @@
 package com.example.inobao.domain.user.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,19 +18,24 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    @Email
+    private String email;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private  String nickname;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)    // Enum값 그대로 db에 저장
     private UserRoleEnum role;
 
     @Builder
-    private User(String username, String password, UserRoleEnum role) {
-        this.username = username;
+    private User(String email, String password, String nickname,UserRoleEnum role) {
+        this.email = email;
         this.password = password;
-        this.role = role;
+        this.nickname = nickname;
+        this.role=role;
     }
 }
