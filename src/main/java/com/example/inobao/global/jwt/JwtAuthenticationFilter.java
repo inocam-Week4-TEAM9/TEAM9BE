@@ -48,9 +48,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.info("로그인 성공 및 JWT 생성");
         String email = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
-
+        String Nickname=((UserDetailsImpl) authResult.getPrincipal()).getNickname();
         String token = jwtUtil.createToken(email, role);
         jwtUtil.addJwtToCookie(token, response);
+        jwtUtil.addTokenToHeader(token, response);
     }
 
     @Override

@@ -61,6 +61,9 @@ public class JwtUtil {
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
     }
+    public void addTokenToHeader(String token, HttpServletResponse response) {
+        response.setHeader(AUTHORIZATION_HEADER, BEARER_PREFIX + token);
+    }
 
     // header 에서 JWT 가져오기
     public String getJwtFromHeader(HttpServletRequest request) {
