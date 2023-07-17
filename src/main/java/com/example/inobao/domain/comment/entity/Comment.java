@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "comment")
+@Table(name = "comments")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
@@ -38,7 +38,7 @@ public class Comment {
     @Column(updatable = false)
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
