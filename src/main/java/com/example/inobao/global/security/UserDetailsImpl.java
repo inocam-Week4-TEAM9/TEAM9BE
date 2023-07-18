@@ -1,6 +1,7 @@
 package com.example.inobao.global.security;
 
 import com.example.inobao.domain.user.entity.User;
+
 import com.example.inobao.domain.user.entity.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,7 +32,7 @@ public class UserDetailsImpl implements UserDetails {
         return user.getEmail();
     }
 
-    public String getNickname() {
+    public String getNickname(){
         return user.getNickname();
     }
 

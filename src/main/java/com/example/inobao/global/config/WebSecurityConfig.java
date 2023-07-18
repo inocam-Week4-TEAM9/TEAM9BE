@@ -1,14 +1,18 @@
 package com.example.inobao.global.config;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.*;
+
 import com.example.inobao.global.jwt.JwtAuthenticationFilter;
 import com.example.inobao.global.jwt.JwtAuthorizationFilter;
 import com.example.inobao.global.jwt.JwtUtil;
 import com.example.inobao.global.security.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,8 +22,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity // Spring Security 지원을 가능하게 함
@@ -38,17 +44,16 @@ public class WebSecurityConfig {
     }
 
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-    //    @Bean
+//    @Bean
 //    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //        http
 //                // by default uses a Bean by the name of corsConfigurationSource
@@ -88,21 +93,23 @@ public class WebSecurityConfig {
         );
 
         http.authorizeHttpRequests((authorizeHttpRequests) ->
-                authorizeHttpRequests
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
-                        .requestMatchers("/").permitAll() // 메인 페이지 요청 허가
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
-                        .requestMatchers("/api/comments/**").permitAll()
-                        .requestMatchers(toH2Console()).permitAll()
-                        .anyRequest().authenticated() // 그 외 요청은 인증 필요
+                        authorizeHttpRequests
+                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
+                                .requestMatchers("/").permitAll() // 메인 페이지 요청 허가
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+                                .requestMatchers("/api/comments/**").permitAll()
+                                .requestMatchers(toH2Console()).permitAll()
+                                .anyRequest().authenticated() // 그 외 요청은 인증 필요
         );
+
 
 
 //        http.formLogin((formLogin) ->
 //                formLogin
 //                        .loginPage("/api/auth/login-page").permitAll()
 //        );
+
 
 
         // 필터 관리

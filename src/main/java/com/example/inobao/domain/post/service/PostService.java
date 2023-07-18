@@ -23,8 +23,8 @@ public class PostService {
 
     // 게시글 전체 조회
     public List<PostResponseDto> getPosts() {
-        List<Post> post = postRepository.findAll();
-        List<PostResponseDto> postres = new ArrayList<>();
+        List<Post> post= postRepository.findAll();
+        List<PostResponseDto> postres=new ArrayList<>();
         for (Post post1 : post) {
             postres.add(new PostResponseDto(post1));
         }
