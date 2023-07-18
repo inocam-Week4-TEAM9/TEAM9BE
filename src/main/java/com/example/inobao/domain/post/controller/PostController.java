@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,8 +33,10 @@ public class PostController {
 
     // 게시글 생성
     @PostMapping("/posts")
-    public PostResponseDto createPost(@Valid @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.createPost(postRequestDto, userDetails.getNickname());
+    public PostResponseDto createPost(@RequestPart("content-data") @Valid PostRequestDto postRequestDto,
+                                      @RequestPart("images-data") List<MultipartFile> images,
+                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.createPost(postRequestDto, userDetails.getNickname(), images);
     }
 
     // 게시글 삭제
