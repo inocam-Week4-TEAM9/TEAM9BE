@@ -21,8 +21,8 @@ public class CommentService {
     private final UserRepository userRepository;
 
     // 댓글 생성
-    public CommentResponseDto createComment(CommentRequestDto commentRequestDto, Long id, String nickname) {
-        Post post = postRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public CommentResponseDto createComment(CommentRequestDto commentRequestDto, Long postId, String nickname) {
+        Post post = postRepository.findById(postId).orElseThrow(IllegalArgumentException::new);
 
         User user = userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException());
 
@@ -37,8 +37,8 @@ public class CommentService {
     }
 
     // 댓글 삭제
-    public ResponseEntity<String> deleteComment(Long postId, Long id, String nickname) {
-        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedDateDesc(postId, id).orElseThrow(IllegalArgumentException::new);
+    public ResponseEntity<String> deleteComment(Long postId, Long commentId, String nickname) {
+        Comment comment = commentRepository.findByPostIdAndId(postId, commentId).orElseThrow(IllegalArgumentException::new);
 
         User user = userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException());
 
@@ -56,8 +56,8 @@ public class CommentService {
     }
 
     // 댓글 수정
-    public CommentResponseDto modifyComment(Long postId, Long id, CommentRequestDto commentRequestDto, String nickname) {
-        Comment comment = commentRepository.findByPostIdAndIdOrderByCreatedDateDesc(postId, id).orElseThrow(IllegalArgumentException::new);
+    public CommentResponseDto modifyComment(Long postId, Long commentId, CommentRequestDto commentRequestDto, String nickname) {
+        Comment comment = commentRepository.findByPostIdAndId(postId, commentId).orElseThrow(IllegalArgumentException::new);
 
         User user = userRepository.findByNickname(nickname).orElseThrow(() -> new IllegalArgumentException());
 
@@ -67,7 +67,7 @@ public class CommentService {
         }
 
         if (!comment.getUser().getId().equals(user.getId())) {
-            throw new IllegalArgumentException("작설자만 수정");
+            throw new IllegalArgumentException("작성자만 수정");
         }
 
         comment.modifyComment(commentRequestDto.getContent());

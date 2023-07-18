@@ -51,7 +51,7 @@ public class PostService {
             return ResponseEntity.ok("삭제 완료");
         }
 
-        if (!post.getUser().getEmail().equals(nickname)) {
+        if (!post.getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("작성자만 삭제");
         }
 
@@ -71,7 +71,7 @@ public class PostService {
             return new PostResponseDto(post);
         }
 
-        if (!post.getUser().getId().equals(user.getId())) {
+        if (!post.getUser().getNickname().equals(user.getNickname())) {
             throw new IllegalArgumentException("작성자만 수정");
         }
 
