@@ -2,6 +2,7 @@ package com.example.inobao.domain.post.dto;
 
 import com.example.inobao.domain.comment.dto.CommentResponseDto;
 import com.example.inobao.domain.post.entity.Post;
+import com.example.inobao.domain.post.entity.PostImage;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -15,8 +16,8 @@ public class PostResponseDto {
     private final LocalDateTime createdDate;
     private final LocalDateTime modifiedDate;
 
-    private List<CommentResponseDto> commentList;
-
+    private final List<CommentResponseDto> commentList;
+    private final List<String> imageUrls;
     private final int likeCount;
     private boolean isLiked;
 
@@ -28,6 +29,8 @@ public class PostResponseDto {
         this.modifiedDate = post.getModifiedDate();
 
         this.commentList = (post.getCommentList() == null) ? null : post.getCommentList().stream().map(CommentResponseDto::new).toList();
+
+        this.imageUrls = (post.getImageUrls() == null) ? null : post.getImageUrls().stream().map(PostImage::getImageUrl).toList();
 
         this.likeCount = post.getLikeCount();
     }

@@ -38,6 +38,9 @@ public class Post {
 
     private int likeCount = 0;
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<PostImage> imageUrls;
+
     @Column(updatable = false)
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
