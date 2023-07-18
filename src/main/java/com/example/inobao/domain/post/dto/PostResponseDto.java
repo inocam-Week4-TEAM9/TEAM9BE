@@ -21,7 +21,7 @@ public class PostResponseDto {
         this.id = post.getId();
         this.nickname = post.getUser().getNickname();
         this.contents = post.getContent();
-        this.createdDate = post.getCreatedDate();
+        this.createdDate = post.getCreateDate();
         this.modifiedDate = post.getModifiedDate();
 
         this.commentList = (post.getCommentList() == null) ? null : post.getCommentList().stream().map(CommentResponseDto::new).toList();

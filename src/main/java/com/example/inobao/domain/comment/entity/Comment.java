@@ -16,15 +16,14 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "comments")
+@Table(name = "comment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -39,7 +38,7 @@ public class Comment {
     @Column(updatable = false)
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdDate;
+    private LocalDateTime createDate;
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
@@ -52,7 +51,5 @@ public class Comment {
         this.content = content;
     }
 
-    public void modifyComment(String content) {
-        this.content = content;
-    }
+    public void modifyComment(String content) { this.content = content; }
 }
