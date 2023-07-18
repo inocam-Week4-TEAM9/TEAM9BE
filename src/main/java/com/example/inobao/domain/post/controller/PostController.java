@@ -27,6 +27,7 @@ public class PostController {
     public static final Logger log = LoggerFactory.getLogger("JWT 관련 로그");
 
     UserDetailsImpl userDetails;
+
     @GetMapping("/posts")
     public ResponseEntity<List<PostResponseDto>> getPosts() {
         List<PostResponseDto> res = postService.getPosts();
@@ -35,19 +36,19 @@ public class PostController {
 
     // 게시글 생성
     @PostMapping("/posts")
-    public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.createPost(postRequestDto, userDetails.getNickname());
     }
 
     // 게시글 삭제
     @DeleteMapping("/posts/{postId}")
-    public ResponseEntity<String> deletePost(@PathVariable Long postId,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.deletePost(postId, userDetails.getNickname());
     }
 
     // 게시글 수정
     @PutMapping("/posts/{postId}")
-    public PostResponseDto modifyPost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails ) {
+    public PostResponseDto modifyPost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.modifyPost(postRequestDto, postId, userDetails.getNickname());
     }
 }

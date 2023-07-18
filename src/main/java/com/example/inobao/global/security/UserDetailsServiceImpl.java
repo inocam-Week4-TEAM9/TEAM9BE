@@ -17,14 +17,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    @Override public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username) .orElseThrow(() -> new UsernameNotFoundException("Not Found " + username));
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Not Found " + username));
         return new UserDetailsImpl(user);
     }
+
     public UserDetails loadUserByNickname(String Nickname) throws UsernameNotFoundException {
         User user = userRepository.findByNickname(Nickname)
                 .orElseThrow(() -> new UsernameNotFoundException("Not Found " + Nickname));
-
         return new UserDetailsImpl(user);
     }
 }

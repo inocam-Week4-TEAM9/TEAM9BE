@@ -14,21 +14,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/posts/{postId}/")
 public class CommentController {
     private final CommentService commentService;
+
     // 댓글 생성
     @PostMapping("/comments")
-    public CommentResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public CommentResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.createComment(commentRequestDto, postId, userDetails.getNickname());
     }
 
     // 댓글 삭제
     @DeleteMapping("/comments/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.deleteComment(postId, commentId, userDetails.getNickname());
     }
 
     // 댓글 수정
     @PutMapping("/comments/{commentId}")
-    public CommentResponseDto modifyComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public CommentResponseDto modifyComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.modifyComment(postId, commentId, commentRequestDto, userDetails.getNickname());
     }
 }
