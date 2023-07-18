@@ -34,7 +34,7 @@ public class PostController {
     // 게시글 생성
     @PostMapping("/posts")
     public PostResponseDto createPost(@RequestPart("content-data") @Valid PostRequestDto postRequestDto,
-                                      @RequestPart("images-data") List<MultipartFile> images,
+                                      @RequestPart(value = "images-data", required = false) List<MultipartFile> images,
                                       @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.createPost(postRequestDto, userDetails.getNickname(), images);
     }
