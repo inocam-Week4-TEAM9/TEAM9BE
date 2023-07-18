@@ -74,7 +74,7 @@ public class WebSecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                         .requestMatchers("/").permitAll() // 메인 페이지 요청 허가
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/posts").permitAll()
                         .requestMatchers("/api/comments/**").permitAll()
                         .requestMatchers(toH2Console()).permitAll()
                         .anyRequest().authenticated() // 그 외 요청은 인증 필요
