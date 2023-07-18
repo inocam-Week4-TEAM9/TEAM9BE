@@ -20,7 +20,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+    private final String ADMIN_TOKEN ="AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
     @Transactional
     public UserResponseDto signIn(UserRequestDto userRequestDto) {

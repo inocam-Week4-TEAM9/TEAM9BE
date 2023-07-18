@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,8 +23,12 @@ public class PostService {
 
     // 게시글 전체 조회
     public List<PostResponseDto> getPosts() {
-        return postRepository.findAllByOrderByCreatedDateDesc()
-                .stream().map(PostResponseDto::new).toList();
+        List<Post> post= postRepository.findAll();
+        List<PostResponseDto> postres=new ArrayList<>();
+        for (Post post1 : post) {
+            postres.add(new PostResponseDto(post1));
+        }
+        return postres;
     }
 
     // 게시글 생성
