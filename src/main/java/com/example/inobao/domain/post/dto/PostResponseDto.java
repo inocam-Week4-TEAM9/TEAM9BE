@@ -17,6 +17,9 @@ public class PostResponseDto {
 
     private List<CommentResponseDto> commentList;
 
+    private final int likeCount;
+    private boolean isLiked;
+
     public PostResponseDto(Post post) {
         this.id = post.getId();
         this.nickname = post.getUser().getNickname();
@@ -25,5 +28,11 @@ public class PostResponseDto {
         this.modifiedDate = post.getModifiedDate();
 
         this.commentList = (post.getCommentList() == null) ? null : post.getCommentList().stream().map(CommentResponseDto::new).toList();
+
+        this.likeCount = post.getLikeCount();
+    }
+
+    public void modifyIsLiked(boolean liked) {
+        this.isLiked = liked;
     }
 }

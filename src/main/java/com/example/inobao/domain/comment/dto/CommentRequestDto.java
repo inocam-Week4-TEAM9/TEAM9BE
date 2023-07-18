@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CommentRequestDto {
-    @NotBlank(message = "게시글 공백 불가")
+    @NotBlank(message = "댓글 공백 불가")
     private String content;
 
     public CommentRequestDto(String content) {

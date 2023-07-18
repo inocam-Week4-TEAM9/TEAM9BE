@@ -33,7 +33,10 @@ public class Post {
     private String content;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("createdDate desc ")
     private List<Comment> commentList;
+
+    private int likeCount = 0;
 
     @Column(updatable = false)
     @CreatedDate
@@ -52,5 +55,13 @@ public class Post {
 
     public void modifyPost(String content) {
         this.content = content;
+    }
+
+    public void addPostLike() {
+        this.likeCount++;
+    }
+
+    public void removePostLike() {
+        this.likeCount--;
     }
 }
