@@ -12,6 +12,7 @@ import com.example.inobao.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +57,7 @@ public class CommentService {
     }
 
     // 댓글 수정
+    @Transactional
     public CommentResponseDto modifyComment(Long postId, Long commentId, CommentRequestDto commentRequestDto, String nickname) {
         Comment comment = commentRepository.findByPostIdAndId(postId, commentId).orElseThrow(IllegalArgumentException::new);
 

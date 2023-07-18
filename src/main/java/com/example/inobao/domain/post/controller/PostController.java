@@ -46,7 +46,7 @@ public class PostController {
     }
 
     // 게시글 수정
-    @PutMapping("/posts/{postId}")
+    @PatchMapping("/posts/{postId}")
     public PostResponseDto modifyPost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.modifyPost(postRequestDto, postId, userDetails.getNickname());
     }

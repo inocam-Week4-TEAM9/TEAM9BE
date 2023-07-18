@@ -36,7 +36,7 @@ public class PostService {
 
     // 게시글 전체 조회
     public List<PostResponseDto> getPosts() {
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findAllByOrderByCreatedDateDesc();
         List<PostResponseDto> postResponse = posts.stream()
                 .map(PostResponseDto::new)
                 .toList();
@@ -46,7 +46,7 @@ public class PostService {
     public List<PostResponseDto> getPosts(String nickname) {
         User user = userRepository.findByNickname(nickname).orElseThrow();
 
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findAllByOrderByCreatedDateDesc();
         List<PostResponseDto> postResponse = posts.stream()
                 .map(PostResponseDto::new)
                 .peek(dto -> dto.modifyIsLiked(postLikeRepository.existsByPostIdAndUserId(dto.getId(), user.getId())))
