@@ -1,22 +1,33 @@
 package com.example.inobao.global.jwt;
 
+import com.example.inobao.domain.user.entity.User;
 import com.example.inobao.domain.user.entity.UserRoleEnum;
+import com.example.inobao.domain.user.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
+
 @Slf4j(topic = "JwtUtil")
 @Component
 public class JwtUtil {
+    private static UserRepository userRepository;
+    public static final Logger logger = LoggerFactory.getLogger("JWT 관련 로그");
     // Header KEY 값
     public static final String AUTHORIZATION_HEADER = "Authorization";
     // 사용자 권한 값의 KEY
@@ -41,7 +52,6 @@ public class JwtUtil {
     // 토큰 생성
     public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
-
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username) // 사용자 식별자값(ID)
@@ -50,6 +60,9 @@ public class JwtUtil {
                         .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
+    }
+    public void addTokenToHeader(String token, HttpServletResponse response) {
+        response.setHeader(AUTHORIZATION_HEADER, token);
     }
 
     // header 에서 JWT 가져오기
@@ -77,9 +90,19 @@ public class JwtUtil {
         }
         return false;
     }
+    // JWT 토큰 substring
+    public String substringToken(String tokenValue) {
+        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
+            return tokenValue.substring(7);
+        }
+        logger.error("Not Found Token");
+        throw new NullPointerException("Not Found Token");
+    }
 
     // 토큰에서 사용자 정보 가져오기
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 }
+
+
