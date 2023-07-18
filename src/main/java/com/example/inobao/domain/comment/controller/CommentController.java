@@ -28,7 +28,7 @@ public class CommentController {
     }
 
     // 댓글 수정
-    @PutMapping("/comments/{commentId}")
+    @PatchMapping("/comments/{commentId}")
     public CommentResponseDto modifyComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.modifyComment(postId, commentId, commentRequestDto, userDetails.getNickname());
     }
