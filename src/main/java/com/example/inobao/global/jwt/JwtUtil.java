@@ -1,12 +1,10 @@
 package com.example.inobao.global.jwt;
 
-import com.example.inobao.domain.user.entity.User;
 import com.example.inobao.domain.user.entity.UserRoleEnum;
 import com.example.inobao.domain.user.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -61,6 +57,7 @@ public class JwtUtil {
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
     }
+
     public void addTokenToHeader(String token, HttpServletResponse response) {
         response.setHeader(AUTHORIZATION_HEADER, token);
     }
@@ -90,6 +87,7 @@ public class JwtUtil {
         }
         return false;
     }
+
     // JWT 토큰 substring
     public String substringToken(String tokenValue) {
         if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
