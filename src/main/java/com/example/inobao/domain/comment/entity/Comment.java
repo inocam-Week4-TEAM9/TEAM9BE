@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -51,5 +52,7 @@ public class Comment {
         this.content = content;
     }
 
-    public void modifyComment(String content) { this.content = content; }
+    public void modifyComment(String content) {
+        this.content = content;
+    }
 }

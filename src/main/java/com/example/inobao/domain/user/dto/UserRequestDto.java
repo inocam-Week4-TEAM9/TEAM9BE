@@ -1,7 +1,5 @@
 package com.example.inobao.domain.user.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
 @Getter

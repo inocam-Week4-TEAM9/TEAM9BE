@@ -23,8 +23,8 @@ public class PostService {
 
     // 게시글 전체 조회
     public List<PostResponseDto> getPosts() {
-        List<Post> post= postRepository.findAll();
-        List<PostResponseDto> postres=new ArrayList<>();
+        List<Post> post = postRepository.findAll();
+        List<PostResponseDto> postres = new ArrayList<>();
         for (Post post1 : post) {
             postres.add(new PostResponseDto(post1));
         }
@@ -56,7 +56,7 @@ public class PostService {
             return ResponseEntity.ok("삭제 완료");
         }
 
-        if (!post.getUser().getEmail().equals(nickname)) {
+        if (!post.getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("작성자만 삭제");
         }
 
@@ -76,7 +76,7 @@ public class PostService {
             return new PostResponseDto(post);
         }
 
-        if (!post.getUser().getId().equals(user.getId())) {
+        if (!post.getUser().getNickname().equals(user.getNickname())) {
             throw new IllegalArgumentException("작성자만 수정");
         }
 
