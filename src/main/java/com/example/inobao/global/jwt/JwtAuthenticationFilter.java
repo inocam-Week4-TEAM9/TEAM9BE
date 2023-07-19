@@ -15,6 +15,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Slf4j(topic = "로그인 및 JWT 생성")
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -51,6 +53,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String nickname = ((UserDetailsImpl) authResult.getPrincipal()).getNickname();
         String token = jwtUtil.createToken(nickname, role);
         jwtUtil.addTokenToHeader(token, response);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("success", true);
+        data.put("status", HttpServletResponse.SC_OK);
+        data.put("msg", "로그인 성공");
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(data);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonString);
     }
 
     @Override
