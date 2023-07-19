@@ -37,4 +37,13 @@ public class AwsUtils {
 
         return amazonS3Client.getUrl(bucketName, fileName).toString();
     }
+
+    public boolean deleteFile(String fileName) {
+        try {
+            amazonS3Client.deleteObject(bucketName, fileName);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
 }

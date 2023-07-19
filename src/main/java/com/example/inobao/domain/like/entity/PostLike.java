@@ -7,6 +7,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Getter
 @Entity
@@ -19,10 +22,12 @@ public class PostLike {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @OnDelete(action = CASCADE)
     private Post post;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = CASCADE)
     private User user;
 
     @Builder
