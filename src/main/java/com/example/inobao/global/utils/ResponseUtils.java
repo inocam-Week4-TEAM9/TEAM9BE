@@ -10,7 +10,7 @@ import java.util.Map;
 public class ResponseUtils {
 
     public static <T> ApiResponse<T> ok(T response) {
-        return new ApiResponse<>(true, 200, "", response, null);
+        return new ApiResponse<>(true, 200, null, response, null);
     }
 
     public static ApiResponse<?> ok(SuccessCode successCode) {
@@ -26,6 +26,6 @@ public class ResponseUtils {
     }
 
     public static ApiResponse<?> error(HttpStatus httpStatus, Map<String, String> errors) {
-        return new ApiResponse<>(false, httpStatus.value(), "", null, errors);
+        return new ApiResponse<>(false, httpStatus.value(), null, null, errors);
     }
 }
