@@ -1,12 +1,10 @@
 package com.example.inobao.global.jwt;
 
-import com.example.inobao.domain.user.entity.User;
 import com.example.inobao.domain.user.entity.UserRoleEnum;
 import com.example.inobao.domain.user.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -50,17 +46,27 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken(String username, UserRoleEnum role) {
+    // Subject = 권한 (E001 관리자, E002회원)
+    // Claim = nickname: nickname
+    public String createToken(String nickname, UserRoleEnum role) {
         Date date = new Date();
+
+        String tokenRole =
+                switch (role) {
+                    case ADMIN -> "E001";
+                    case USER -> "E002";
+                };
+
         return BEARER_PREFIX +
                 Jwts.builder()
-                        .setSubject(username) // 사용자 식별자값(ID)
-                        .claim(AUTHORIZATION_KEY, role) // 사용자 권한
+                        .setSubject(tokenRole) // 사용자 식별자값(ID)
+                        .claim("nickname", nickname) // 사용자 권한
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 만료 시간
                         .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
     }
+
     public void addTokenToHeader(String token, HttpServletResponse response) {
         response.setHeader(AUTHORIZATION_HEADER, token);
     }
@@ -89,14 +95,6 @@ public class JwtUtil {
             log.error("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
         }
         return false;
-    }
-    // JWT 토큰 substring
-    public String substringToken(String tokenValue) {
-        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
-            return tokenValue.substring(7);
-        }
-        logger.error("Not Found Token");
-        throw new NullPointerException("Not Found Token");
     }
 
     // 토큰에서 사용자 정보 가져오기
